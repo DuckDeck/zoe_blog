@@ -5,12 +5,14 @@ import 'package:zoe_blog/model/article.dart';
 class HomeState{
   final List<Ad> ads;
   final List<Article> articles;
-  final bool loading;
-  HomeState({this.ads,this.articles,this.loading});
+  final bool isLoading;
+  HomeState({this.ads,this.articles,this.isLoading});
 
-  
+  HomeState copyWith({List<Ad> ads,List<Article> articles,bool loading}){
+    return HomeState(articles: articles ?? this.articles,ads: ads ?? this.ads ?? isLoading ?? this.isLoading);
+  }
 
-  HomeState.initialState():ads=[],articles=[],loading=true;
+  HomeState.initialState():ads=[],articles=[],isLoading=true;
 
   
 
