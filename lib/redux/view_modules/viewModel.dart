@@ -11,4 +11,4 @@ class StoreContainer{
   static final Store<ReduxState> global = reduxStore();
 }
 
-Store reduxStore()=>Store<ReduxState>(reduxReducer,initialState: ReduxState(home: HomeState.initialState());
+Store reduxStore()=>Store<ReduxState>(reduxReducer,initialState: ReduxState(home: HomeState.initialState()));

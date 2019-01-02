@@ -11,4 +11,6 @@ class HomeViewModel extends ViewModel{
   List<Ad> get ads => this.store.state.home.ads;
 
   List<Article> get articles => this.store.state.home.articles;
+
+  bool get isLoading => this.store.state.home.isLoading;
 }
