@@ -4,7 +4,7 @@ import 'package:zoe_blog/redux/reducers/reduxReducer.dart';
 import 'package:zoe_blog/redux/states/home.dart';
 abstract class ViewModel {
   final Store<ReduxState> store;
-  ViewModel({this.store});
+  ViewModel(this.store);
 }
 
 class StoreContainer{

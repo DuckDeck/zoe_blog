@@ -49,7 +49,7 @@ class TabPageState extends State<TabPage> with TickerProviderStateMixin {
             TabBarItem(
               text: "我的",
               icon: Icons.info,
-              selected: selectedIndex == 3,
+              selected: selectedIndex == 1,
             )
           ],
         ),

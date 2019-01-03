@@ -3,7 +3,7 @@ import 'package:zoe_blog/redux/actions/main.dart';
 import 'package:zoe_blog/redux/states/home.dart';
 HomeState reducer(HomeState state,ActionType action){
   if(action is UpdateArticles){
-    return state.copyWith(articles: action.payload);
+    return state.copyWith(articles: action.payload,loading:false);
   }
    if(action is UpdateAds){
     return state.copyWith(ads: action.payload);

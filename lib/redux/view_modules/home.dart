@@ -6,7 +6,7 @@ import 'package:zoe_blog/model/article.dart';
 import 'package:redux/redux.dart';
 
 class HomeViewModel extends ViewModel{
-  HomeViewModel(Store<ReduxState> store):super();
+  HomeViewModel(Store<ReduxState> store):super(store);
 
   List<Ad> get ads => this.store.state.home.ads;
 

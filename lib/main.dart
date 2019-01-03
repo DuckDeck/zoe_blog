@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:zoe_blog/pages/tab_page.dart';
 import 'package:redux/redux.dart';
 import 'package:zoe_blog/redux/states/reduxState.dart';
-import 'package:zoe_blog/redux/view_modules/viewModel.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-void main() => runApp(MyApp());
+import 'package:zoe_blog/redux/view_modules/viewModel.dart';
+void main() {
+  final Store<ReduxState> store = StoreContainer.global;
+  runApp(MyApp(store: store,));
+
+}
 
 class MyApp extends StatelessWidget {
   final Store<ReduxState> store;
