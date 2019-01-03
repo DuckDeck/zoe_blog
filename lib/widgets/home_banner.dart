@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:zoe_blog/model/ad.dart';
 import 'package:zoe_blog/widgets/slider_indicator.dart';
-
+import 'package:cached_network_image/cached_network_image.dart';
 class HomeBanner extends StatefulWidget {
   final List<Ad> banners;
 
@@ -71,9 +71,20 @@ class _HomeBannerState extends State<HomeBanner> {
                             //           poster: ad.pic,
                             //         )));
                           },
-                          child: Image(
-                            image: NetworkImage(ad.mainImg),
-                          ),
+                          child: Stack(
+                            alignment: AlignmentDirectional.center,
+                            children: <Widget>[
+                             CachedNetworkImage(imageUrl: ad.mainImg,),
+                              Container(color: Color.fromARGB(100, 100, 100, 100),),
+                              Positioned(
+                                bottom: 40,
+                                child: Text(ad.name,
+                                maxLines: 2,
+                                style: TextStyle(color: Colors.white),
+                                textAlign: TextAlign.center,overflow: TextOverflow.fade,),
+                              )
+                            ],
+                          )
                         ))
                     .toList()),
           ),

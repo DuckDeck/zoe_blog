@@ -16,7 +16,9 @@ class Tag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
+    return Offstage(
+      offstage: text.isEmpty,
+      child: ConstrainedBox(
       constraints: BoxConstraints(maxWidth: 120.0),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
@@ -29,9 +31,10 @@ class Tag extends StatelessWidget {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 10.0, color: color),
+          style: TextStyle(fontSize: 12.0, color: color),
         ),
       ),
+    ),
     );
   }
 }

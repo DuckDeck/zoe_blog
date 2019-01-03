@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-
+import 'package:zoe_blog/tool/tool.dart';
 import 'package:zoe_blog/model/article.dart';
 import 'package:zoe_blog/widgets/tag.dart';
+import 'package:zoe_blog/tool/constant.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 class ArticleView extends StatelessWidget {
   final Article vm;
 
@@ -42,13 +44,14 @@ class ArticleView extends StatelessWidget {
                               ],
                             ),
                             Text(
-                              vm.releaseTime.toString(),
+                              Tool.readTimestamp(vm.releaseTime),
                               style: Theme.of(context).textTheme.caption,
                             )
                           ],
                         ),
                       ),
-                    )
+                    ),
+                    Tag(text: vm.sortName ?? "",   border: true,color: Colors.cyan)
                   ],
                 ),
               ),
@@ -63,6 +66,9 @@ class ArticleView extends StatelessWidget {
                         style: Theme.of(context).textTheme.display1,
                       ),
                     ),
+              Padding(padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child:CachedNetworkImage(imageUrl: vm.mainImg,),
+              ),      
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(

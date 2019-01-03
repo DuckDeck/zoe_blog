@@ -9,7 +9,7 @@ class HomeState{
   HomeState({this.ads,this.articles,this.isLoading});
 
   HomeState copyWith({List<Ad> ads,List<Article> articles,bool loading}){
-    return HomeState(articles: articles ?? this.articles,ads: ads ?? this.ads,isLoading: isLoading ?? this.isLoading);
+    return HomeState(articles: articles ?? this.articles,ads: ads ?? this.ads,isLoading: loading ?? this.isLoading);
   }
 
   HomeState.initialState():ads=[],articles=[],isLoading=true;
