@@ -78,6 +78,21 @@ class ArticleView extends StatelessWidget {
                   style: Theme.of(context).textTheme.body1,
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Row(
+                  children: <Widget>[
+                    Icon(Icons.remove_red_eye,color: Colors.cyan,),
+                    Text(vm.clickNum.toString()),
+                    SizedBox(width: 6,),
+                    Icon(Icons.comment,color: Colors.cyan,),
+                    Text(vm.commentCount.toString()),
+                    SizedBox(width: 6,),
+                    Icon(Icons.memory,color: Colors.cyan,),
+                    Text(vm.likeCount.toString()),
+                  ],
+                ),
+              ),
               Container(
                 child: _buildContent(context),
               ),
