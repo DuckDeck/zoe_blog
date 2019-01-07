@@ -82,13 +82,13 @@ class ArticleView extends StatelessWidget {
                 padding: const EdgeInsets.all(4.0),
                 child: Row(
                   children: <Widget>[
-                    Icon(Icons.remove_red_eye,color: Colors.cyan,),
+                    Icon(Icons.remove_red_eye,color: Colors.cyan, size: 16,),
                     Text(vm.clickNum.toString()),
                     SizedBox(width: 6,),
-                    Icon(Icons.comment,color: Colors.cyan,),
+                    Icon(Icons.comment,color: Colors.cyan, size: 16),
                     Text(vm.commentCount.toString()),
                     SizedBox(width: 6,),
-                    Icon(Icons.memory,color: Colors.cyan,),
+                    Icon(Icons.memory,color: Colors.cyan, size: 16),  //不知道为什么心没有
                     Text(vm.likeCount.toString()),
                   ],
                 ),
