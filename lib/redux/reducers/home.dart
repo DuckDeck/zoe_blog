@@ -8,5 +8,10 @@ HomeState reducer(HomeState state,ActionType action){
    if(action is UpdateAds){
     return state.copyWith(ads: action.payload);
   }
+  if (action is AddArticles){
+    final origin = state.articles;
+    origin.addAll(action.payload);
+    return state.copyWith(articles: action.payload,loadingMore: false);
+  }
   return state;
 }

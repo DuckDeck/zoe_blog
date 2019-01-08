@@ -13,4 +13,6 @@ class HomeViewModel extends ViewModel{
   List<Article> get articles => this.store.state.home.articles;
 
   bool get isLoading => this.store.state.home.isLoading;
+  
+  bool get isLoadingMore => this.store.state.home.isLoadingMore;
 }

@@ -68,6 +68,29 @@ class Article{
   }
 
 
+static getHomeArticles(int index, int size) async{
+  final url = "http://api.bqbbq.com/api/index/$index/$size";
+    final httpClient = Dio();
+    final res = await httpClient.get(url);
+    var map = res.data as Map<String,dynamic>;
+    if(map["code"] != 0){
+      // report error
+      return;
+    }
+    print(map["data"]);
+    map = map["data"];
+    //var map = json.decode(s); //所以这里的问题就是如果出现错误不知道 怎么搞，目前用的这个redux好像不支持，直接取出数据来了
+ 
+    List<Article> articles = [];
+   
+    for(var item in map["articles"]){
+      final article = Article.fromJson(item);
+      articles.add(article);
+    }
+    
+    StoreContainer.global.dispatch(UpdateArticles(payload: articles));
+}
+
 
 
 }

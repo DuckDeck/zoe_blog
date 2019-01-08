@@ -10,3 +10,10 @@ class UpdateArticles extends ActionType {
   final List<Article> payload;
   UpdateArticles({this.payload}) : super(payload: payload);
 }
+
+class AddArticles extends ActionType{
+    final List<Article> payload;
+    AddArticles({this.payload}) : super(payload: payload);
+}
+
+
