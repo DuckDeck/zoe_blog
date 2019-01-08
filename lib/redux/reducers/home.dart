@@ -11,7 +11,10 @@ HomeState reducer(HomeState state,ActionType action){
   if (action is AddArticles){
     final origin = state.articles;
     origin.addAll(action.payload);
-    return state.copyWith(articles: action.payload,loadingMore: false);
+    return state.copyWith(articles: origin,loadingMore: 0);
+  }
+  if (action is LoadMoreStatus){
+    return state.copyWith(loadingMore: action.payload);
   }
   return state;
 }

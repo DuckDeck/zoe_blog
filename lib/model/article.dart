@@ -33,11 +33,16 @@ class Article{
     commentCount = json["comment_count"];
     likeCount = json["like_count"];
     tags = [];
-    for(final item in json["tags"]){
-      final tag = Tag.fromJson(item);
-      tags.add(tag);
+    if(json.containsKey("tags")){
+      for(final item in json["tags"]){
+        final tag = Tag.fromJson(item);
+        tags.add(tag);
+      }
     }
-    userInfo = User.fromJson(json["userInfo"]);
+    if(json.containsKey("userInfo")){
+      userInfo = User.fromJson(json["userInfo"]);
+    }
+    
   }
 
   static getHomeData() async {
@@ -69,7 +74,8 @@ class Article{
 
 
 static getHomeArticles(int index, int size) async{
-  final url = "http://api.bqbbq.com/api/index/$index/$size";
+    StoreContainer.global.dispatch(LoadMoreStatus(payload: 1));
+    final url = "http://api.bqbbq.com/api/index/$index/$size";
     final httpClient = Dio();
     final res = await httpClient.get(url);
     var map = res.data as Map<String,dynamic>;
@@ -78,17 +84,21 @@ static getHomeArticles(int index, int size) async{
       return;
     }
     print(map["data"]);
-    map = map["data"];
     //var map = json.decode(s); //所以这里的问题就是如果出现错误不知道 怎么搞，目前用的这个redux好像不支持，直接取出数据来了
  
     List<Article> articles = [];
    
-    for(var item in map["articles"]){
+    for(var item in map["data"]){
       final article = Article.fromJson(item);
       articles.add(article);
     }
+    if(articles.length < size){
+        StoreContainer.global.dispatch(LoadMoreStatus(payload: 2));
+    }
+    if(articles.length > 0){
+      StoreContainer.global.dispatch(AddArticles(payload: articles));
+    }
     
-    StoreContainer.global.dispatch(UpdateArticles(payload: articles));
 }
 
 

@@ -14,5 +14,5 @@ class HomeViewModel extends ViewModel{
 
   bool get isLoading => this.store.state.home.isLoading;
   
-  bool get isLoadingMore => this.store.state.home.isLoadingMore;
+  int get loadingMoreStatus => this.store.state.home.loadingMoreStatus;
 }

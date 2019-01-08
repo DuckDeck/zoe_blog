@@ -16,4 +16,9 @@ class AddArticles extends ActionType{
     AddArticles({this.payload}) : super(payload: payload);
 }
 
+class LoadMoreStatus extends ActionType{
+    final int payload;
+    LoadMoreStatus({this.payload}) : super(payload: payload);
+}
+
 

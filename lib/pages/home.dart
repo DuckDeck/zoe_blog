@@ -12,9 +12,10 @@ class HomePage extends StatefulWidget{
 }
 class _HomePageSate extends State<HomePage>{
   ScrollController _controller = new ScrollController(); 
-  int index = 0;
-  var isLoadAll = false;
-  var isLoadingMore = false;
+
+  
+  
+  HomeViewModel vm ;
   @override
     void initState() {
       // TODO: implement initState
@@ -25,7 +26,7 @@ class _HomePageSate extends State<HomePage>{
        if (_controller.position.pixels ==
           _controller.position.maxScrollExtent) {
           print('滑动到了最底部');
-          
+          Article.getHomeArticles((vm.articles.length ~/ 10), 10);
        }
       });
     }
@@ -56,15 +57,15 @@ class _HomePageSate extends State<HomePage>{
       body: StoreConnector<ReduxState,HomeViewModel>(
         converter: (store)=>HomeViewModel(store),
         builder: (conrext,vm){
+          this.vm = vm;
           return Container(
             child: vm.isLoading?Center(child: CircularProgressIndicator(),):Container(
               child: ListView(
-                primary: true,
+                controller: _controller,
                 children: <Widget>[
                   Padding(padding: const EdgeInsets.all(8.0),child: vm.ads.isNotEmpty ? HomeBanner(banners: vm.ads,) : Container()),
                   Container(height: 8,color: Colors.grey[100],),
                   vm.articles.isNotEmpty ? ListView.builder(
-                    controller: _controller,
                     shrinkWrap: true,
                     physics: ClampingScrollPhysics(),
                     itemCount: vm.articles.length + 1,
@@ -72,7 +73,7 @@ class _HomePageSate extends State<HomePage>{
                       if(index < vm.articles.length){
                         return ArticleView(vm: vm.articles[index]);
                       }
-                      return isLoadingMore ? _getMoreWidget() : null;
+                      return _getMoreWidget(vm.loadingMoreStatus);
                     },
                   ):Container()
                 ],
@@ -84,30 +85,30 @@ class _HomePageSate extends State<HomePage>{
         );
       }
 
-      void loadMore(){
-        if(!isLoadingMore){
-          setState(() {
-            isLoadingMore = true;
-          });
-        }
+  
+  
+    Widget _getMoreWidget(int loadMoreStatus) {
+      if(loadMoreStatus == 0){
+        return null;
       }
-
-      Widget _getMoreWidget() {
-      return Center(
-        child: Padding(
-          padding: EdgeInsets.all(10.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                isLoadAll ? '已经到底了': '加载中...     ',
-                style: TextStyle(fontSize: 16.0),
-              ),
-              isLoadAll ? null : CircularProgressIndicator(strokeWidth: 1.0,)
-            ],
+      else{
+        return Center(
+          child: Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  loadMoreStatus == 2 ? '已经到底了': '加载中...     ',
+                  style: TextStyle(fontSize: 16.0),
+                ),
+                loadMoreStatus == 2 ? null : CircularProgressIndicator(strokeWidth: 1.0,)
+              ],
+            ),
           ),
-        ),
-     );
-  }
+       );
+      }
+     
+    }
   }
