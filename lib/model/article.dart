@@ -73,7 +73,7 @@ class Article{
   }
 
 
-static getHomeArticles(int index, int size) async{
+  static getHomeArticles(int index, int size) async{
     StoreContainer.global.dispatch(LoadMoreStatus(payload: 1));
     final url = "http://api.bqbbq.com/api/index/$index/$size";
     final httpClient = Dio();
@@ -101,6 +101,31 @@ static getHomeArticles(int index, int size) async{
     
 }
 
+  static searchArticle(String key,int index,int size) async{
+    final url = "http://api.bqbbq.com/api/search/$key/article/$index/$size";
+    final httpClient = Dio();
+    final res = await httpClient.get(url);
+    var map = res.data as Map<String,dynamic>;
+    if(map["code"] != 0){
+      // report error
+      return;
+    }
+    print(map["data"]);
+  }
 
+  
+
+
+  static searchSort(String key,int index,int size) async{
+    final url = "http://api.bqbbq.com/api/search/$key/article/$index/$size";
+    final httpClient = Dio();
+    final res = await httpClient.get(url);
+    var map = res.data as Map<String,dynamic>;
+    if(map["code"] != 0){
+      // report error
+      return;
+    }
+    print(map["data"]);
+  }
 
 }

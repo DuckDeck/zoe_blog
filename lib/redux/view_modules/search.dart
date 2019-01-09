@@ -8,7 +8,6 @@ import 'package:redux/redux.dart';
 class SearchViewModel extends ViewModel{
   SearchViewModel(Store<ReduxState> store):super(store);
 
-
   List<User> get ads => this.store.state.search.users;
 
   List<Article> get articles => this.store.state.search.articles;

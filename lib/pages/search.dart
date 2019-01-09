@@ -28,4 +28,11 @@ class  SearchPageState extends State<SearchPage>{
      
    }
 
+
+  void startSearch(String key){
+    if(key.isEmpty){
+      return;
+    }
+
+  }
 }
