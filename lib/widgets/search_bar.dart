@@ -4,9 +4,9 @@ class SearchBar extends StatelessWidget {
   final String placeholder;
   final bool enabled;
   final Function onSubmitted;
-
+  final Function iconClick;
   const SearchBar(
-      {Key key, this.placeholder = "搜索文章/用户/标签", this.enabled = true, this.onSubmitted})
+      {Key key, this.placeholder = "搜索文章/用户/标签", this.enabled = true, this.onSubmitted,this.iconClick})
       : super(key: key);
 
   @override
@@ -19,9 +19,11 @@ class SearchBar extends StatelessWidget {
       child: TextField(
         enabled: enabled,
         decoration: InputDecoration(
-          prefixIcon: Icon(Icons.search),
           hintText: placeholder,
           border: InputBorder.none,
+          suffixIcon: IconButton(icon: Icon(Icons.search),onPressed: iconClick,),
+          contentPadding: EdgeInsets.all(8),
+          
         ),
         onSubmitted: onSubmitted,
       ),

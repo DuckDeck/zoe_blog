@@ -6,6 +6,7 @@ import 'package:zoe_blog/redux/view_modules/home.dart';
 import 'package:zoe_blog/redux/states/reduxState.dart';
 import 'package:zoe_blog/widgets/home_banner.dart';
 import 'package:zoe_blog/widgets/home_article.dart';
+import 'package:zoe_blog/pages/search.dart';
 class HomePage extends StatefulWidget{
   @override
     State<StatefulWidget> createState() =>_HomePageSate();
@@ -35,24 +36,13 @@ class _HomePageSate extends State<HomePage>{
       Widget build(BuildContext context) {
         // TODO: implement build
         return Scaffold(backgroundColor: Colors.white,
-              appBar: AppBar(
-        elevation: 0.0,
-        title: GestureDetector(
-          child: SearchBar(
-            enabled: false,
-          ),
-          onTap: () {
-           
-          },
+          appBar: AppBar(
+            elevation: 0.0,
+            title: GestureDetector(child: SearchBar(enabled: false,),
+             onTap: (){
+               Navigator.of(context).push(MaterialPageRoute(builder: (context)=>SearchPage()));
+             },
         ),
-        actions: <Widget>[
-          Container(
-            margin: EdgeInsets.only(right: 8.0),
-            child: CircleAvatar(
-              child: Text(DateTime.now().day.toString()),
-            ),
-          ),
-        ],
       ),
       body: StoreConnector<ReduxState,HomeViewModel>(
         converter: (store)=>HomeViewModel(store),
