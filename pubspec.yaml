@@ -23,8 +23,6 @@ dependencies:
   cached_network_image: ^0.5.1
   fluttertoast: ^2.2.2
   photo_view: ^0.0.3
-  redux: "^3.0.0"
-  flutter_redux: "^0.5.2"
 dev_dependencies:
   flutter_test:
     sdk: flutter

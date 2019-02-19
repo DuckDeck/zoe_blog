@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:zoe_blog/redux/view_modules/search.dart';
+
 import 'package:zoe_blog/widgets/search_bar.dart';
+import 'package:zoe_blog/model/article.dart';
 class SearchPage extends StatefulWidget{
   @override
     State<StatefulWidget> createState() => SearchPageState();
 }
 
 class  SearchPageState extends State<SearchPage>{
-  SearchViewModel vm;
+ 
   @override
     void initState() {
-      // TODO: implement initState
+     
       super.initState();
 
     }
@@ -19,9 +20,11 @@ class  SearchPageState extends State<SearchPage>{
       return Scaffold(backgroundColor: Colors.white,
         appBar: AppBar(
             elevation: 0.0,
-            title: GestureDetector(child: SearchBar(enabled: true, iconClick: (){
+            title: SearchBar(enabled: true, iconClick: (){
               
-            },)),
+            },onSubmitted: (String key){
+                this.startSearch(key);
+            })
              
         ),
       );
@@ -33,6 +36,6 @@ class  SearchPageState extends State<SearchPage>{
     if(key.isEmpty){
       return;
     }
-
+    Article.searchArticle(key, 1, 10);
   }
 }

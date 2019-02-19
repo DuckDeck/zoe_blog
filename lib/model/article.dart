@@ -1,9 +1,9 @@
 import 'tag.dart';
 import 'user.dart';
-import 'package:zoe_blog/redux/view_modules/viewModel.dart';
+
 import 'package:dio/dio.dart';
 import 'package:zoe_blog/model/ad.dart';
-import 'package:zoe_blog/redux/actions/home.dart';
+
 class Article{
   int articleId;
   int createTime;
@@ -68,13 +68,12 @@ class Article{
       final article = Article.fromJson(item);
       articles.add(article);
     }
-    StoreContainer.global.dispatch(UpdateAds(payload: ads));
-    StoreContainer.global.dispatch(UpdateArticles(payload: articles));
+    
   }
 
 
   static getHomeArticles(int index, int size) async{
-    StoreContainer.global.dispatch(LoadMoreStatus(payload: 1));
+   
     final url = "http://api.bqbbq.com/api/index/$index/$size";
     final httpClient = Dio();
     final res = await httpClient.get(url);
@@ -92,12 +91,7 @@ class Article{
       final article = Article.fromJson(item);
       articles.add(article);
     }
-    if(articles.length < size){
-        StoreContainer.global.dispatch(LoadMoreStatus(payload: 2));
-    }
-    if(articles.length > 0){
-      StoreContainer.global.dispatch(AddArticles(payload: articles));
-    }
+    
     
 }
 

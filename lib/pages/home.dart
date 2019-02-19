@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zoe_blog/model/article.dart';
 import 'package:zoe_blog/widgets/search_bar.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:zoe_blog/redux/view_modules/home.dart';
-import 'package:zoe_blog/redux/states/reduxState.dart';
+
 import 'package:zoe_blog/widgets/home_banner.dart';
 import 'package:zoe_blog/widgets/home_article.dart';
 import 'package:zoe_blog/pages/search.dart';
@@ -14,9 +12,6 @@ class HomePage extends StatefulWidget{
 class _HomePageSate extends State<HomePage>{
   ScrollController _controller = new ScrollController(); 
 
-  
-  
-  HomeViewModel vm ;
   @override
     void initState() {
       // TODO: implement initState
@@ -27,7 +22,7 @@ class _HomePageSate extends State<HomePage>{
        if (_controller.position.pixels ==
           _controller.position.maxScrollExtent) {
           print('滑动到了最底部');
-          Article.getHomeArticles((vm.articles.length ~/ 10), 10);
+          //Article.getHomeArticles((vm.articles.length ~/ 10), 10);
        }
       });
     }
@@ -44,35 +39,34 @@ class _HomePageSate extends State<HomePage>{
              },
         ),
       ),
-      body: StoreConnector<ReduxState,HomeViewModel>(
-        converter: (store)=>HomeViewModel(store),
-        builder: (conrext,vm){
-          this.vm = vm;
-          return Container(
-            child: vm.isLoading?Center(child: CircularProgressIndicator(),):Container(
-              child: ListView(
-                controller: _controller,
-                children: <Widget>[
-                  Padding(padding: const EdgeInsets.all(8.0),child: vm.ads.isNotEmpty ? HomeBanner(banners: vm.ads,) : Container()),
-                  Container(height: 8,color: Colors.grey[100],),
-                  vm.articles.isNotEmpty ? ListView.builder(
-                    shrinkWrap: true,
-                    physics: ClampingScrollPhysics(),
-                    itemCount: vm.articles.length + 1,
-                    itemBuilder: (context,index){
-                      if(index < vm.articles.length){
-                        return ArticleView(vm: vm.articles[index]);
-                      }
-                      return _getMoreWidget(vm.loadingMoreStatus);
-                    },
-                  ):Container()
-                ],
-              ),
+      body: 
+       Container(
+            // child: vm.isLoading?Center(child: CircularProgressIndicator(),):Container(
+            //   child: ListView(
+            //     controller: _controller,
+            //     children: <Widget>[
+            //       Padding(padding: const EdgeInsets.all(8.0),child: vm.ads.isNotEmpty ? HomeBanner(banners: vm.ads,) : Container()),
+            //       Container(height: 8,color: Colors.grey[100],),
+            //       vm.articles.isNotEmpty ? ListView.builder(
+            //         shrinkWrap: true,
+            //         physics: ClampingScrollPhysics(),
+            //         itemCount: vm.articles.length + 1,
+            //         itemBuilder: (context,index){
+            //           if(index < vm.articles.length){
+            //             return ArticleView(vm: vm.articles[index]);
+            //           }
+            //           return _getMoreWidget(vm.loadingMoreStatus);
+            //         },
+            //       ):Container()
+            //     ],
+            //   )
             )
-          );
-        },
-      )
-        );
+           
+            
+          
+        
+      );
+        
       }
 
   
