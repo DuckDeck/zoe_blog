@@ -12,7 +12,7 @@ class HomePage extends StatefulWidget{
 }
 class _HomePageSate extends State<HomePage>{
   ScrollController _controller = new ScrollController(); 
-  int loadStatus = 0; //0 第一次加载  1 正常 2 加载更多 
+  int loadMore = 0; //  1 正常 2 加载更多 
   Result result;
   @override
     void initState() {
@@ -22,6 +22,7 @@ class _HomePageSate extends State<HomePage>{
         print(_controller.offset);
        if (_controller.position.pixels ==
           _controller.position.maxScrollExtent) {
+            loadMore =  2;
           print('滑动到了最底部');
           //Article.getHomeArticles((vm.articles.length ~/ 10), 10);
        }
@@ -42,7 +43,7 @@ class _HomePageSate extends State<HomePage>{
       ),
       body: 
        Container(
-            child: (loadStatus != 1 && loadStatus != 2)?Center(child: CircularProgressIndicator(),):Container(
+            child: (result ==null)?Center(child: CircularProgressIndicator(),):Container(
               child: ListView(
                 controller: _controller,
                 children: <Widget>[
@@ -51,10 +52,10 @@ class _HomePageSate extends State<HomePage>{
                   result.data["article"].isNotEmpty ? ListView.builder(
                     shrinkWrap: true,
                     physics: ClampingScrollPhysics(),
-                    itemCount: result.data["article"].articles.length + 1,
+                    itemCount: result.data["article"].length + 1,
                     itemBuilder: (context,index){
-                      if(index < result.data["article"].articles.length){
-                        return ArticleView(vm: result.data["article"].articles[index]);
+                      if(index < result.data["article"].length){
+                        return ArticleView(vm: result.data["article"][index]);
                       }
                       return _getMoreWidget();
                     },
@@ -62,8 +63,9 @@ class _HomePageSate extends State<HomePage>{
                 ],
               )
             )
+       )
       );
-      
+        
       }
 
    void initData() async {
@@ -72,13 +74,14 @@ class _HomePageSate extends State<HomePage>{
        Fluttertoast.showToast(msg: res.cmsg,toastLength:Toast.LENGTH_SHORT,gravity: ToastGravity.BOTTOM);
        return;
      }
+     
      setState(() {
        result =res;
      });
    }
   
     Widget _getMoreWidget() {
-      if(loadStatus == 1 || loadStatus == 0){
+      if(loadMore == 1){
         return null;
       }
       else{
@@ -90,10 +93,10 @@ class _HomePageSate extends State<HomePage>{
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  loadMoreStatus == 2 ? '已经到底了': '加载中...     ',
+                  loadMore == 1 ? '已经到底了': '加载中...     ',
                   style: TextStyle(fontSize: 16.0),
                 ),
-                loadMoreStatus == 2 ? null : CircularProgressIndicator(strokeWidth: 1.0,)
+                loadMore == 1 ? null : CircularProgressIndicator(strokeWidth: 1.0,)
               ],
             ),
           ),

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class Result{
   int code;
   String msg;
@@ -9,12 +7,11 @@ class Result{
 
   Result({this.code,this.msg,this.cmsg,this.count,this.data});
 
-  Result.fromData(String data){
-    final js = json.decode(data);
-    code = js["code"];
-    msg = js["msg"];
-    cmsg = js["cMsg"];
-    data = js["data"];
-    count = js["count"];
+  Result.fromData(Map<String, dynamic> resData){
+    code = resData["code"];
+    msg = resData["msg"];
+    cmsg = resData["cMsg"];
+    data = resData["data"];
+    count = resData["count"];
   }
 }

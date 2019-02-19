@@ -67,7 +67,7 @@ class ArticleView extends StatelessWidget {
                       ),
                     ),
               Padding(padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child:CachedNetworkImage(imageUrl: vm.mainImg,),
+                child:CachedNetworkImage(imageUrl: vm.mainImg),
               ),      
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
