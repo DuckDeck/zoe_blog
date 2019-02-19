@@ -34,7 +34,6 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
     return  FadeTransition(
       opacity: _animation,
       child: Image.network("http://222.186.12.239:10010/xinggan180730/010.jpg",scale: 2.0,fit: BoxFit.cover,),
-      
     );
   }
 }

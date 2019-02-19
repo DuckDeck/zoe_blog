@@ -1,9 +1,9 @@
 import 'tag.dart';
 import 'user.dart';
-
 import 'package:dio/dio.dart';
 import 'package:zoe_blog/model/ad.dart';
-
+import 'dart:core';
+import 'package:zoe_blog/model/result.dart';
 class Article{
   int articleId;
   int createTime;
@@ -45,54 +45,49 @@ class Article{
     
   }
 
-  static getHomeData() async {
+  static Future<Result> getHomeData() async {
     final url = "http://api.bqbbq.com/api/index";
     final httpClient = Dio();
     final res = await httpClient.get(url);
-    var map = res.data as Map<String,dynamic>;
-    if(map["code"] != 0){
-      // report error
-      return;
+
+    final result =Result.fromData(res.data);
+    if (result.code != 0){
+      return result;
     }
-    print(map["data"]);
-    map = map["data"];
     //var map = json.decode(s); //所以这里的问题就是如果出现错误不知道 怎么搞，目前用的这个redux好像不支持，直接取出数据来了
     List<Ad> ads = [];
     List<Article> articles = [];
-    for(var item in map["top"]){
+    for(var item in result.data["top"]){
       final ad = Ad.fromJson(item);
-      
       ads.add(ad);
     }
-    for(var item in map["articles"]){
+    for(var item in result.data["articles"]){
       final article = Article.fromJson(item);
       articles.add(article);
     }
-    
+    result.data = {"ad":ads,"article":articles};
+    return result;
   }
 
 
-  static getHomeArticles(int index, int size) async{
-   
+  static Future<Result> getHomeArticles(int index, int size) async{
+
     final url = "http://api.bqbbq.com/api/index/$index/$size";
     final httpClient = Dio();
     final res = await httpClient.get(url);
-    var map = res.data as Map<String,dynamic>;
-    if(map["code"] != 0){
-      // report error
-      return;
+    final result =Result.fromData(res.data);
+    if (result.code != 0){
+      return result;
     }
-    print(map["data"]);
-    //var map = json.decode(s); //所以这里的问题就是如果出现错误不知道 怎么搞，目前用的这个redux好像不支持，直接取出数据来了
  
     List<Article> articles = [];
    
-    for(var item in map["data"]){
+    for(var item in result.data["data"]){
       final article = Article.fromJson(item);
       articles.add(article);
     }
-    
-    
+    result.data =articles;
+    return result;
 }
 
   static searchArticle(String key,int index,int size) async{

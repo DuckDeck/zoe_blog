@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zoe_blog/pages/tab_page.dart';
-class HomaPage extends StatelessWidget {
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

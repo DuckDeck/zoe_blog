@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:zoe_blog/model/article.dart';
 import 'package:zoe_blog/widgets/search_bar.dart';
-
+import 'package:zoe_blog/model/result.dart';
 import 'package:zoe_blog/widgets/home_banner.dart';
 import 'package:zoe_blog/widgets/home_article.dart';
 import 'package:zoe_blog/pages/search.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 class HomePage extends StatefulWidget{
   @override
     State<StatefulWidget> createState() =>_HomePageSate();
 }
 class _HomePageSate extends State<HomePage>{
   ScrollController _controller = new ScrollController(); 
-
+  int loadStatus = 0; //0 第一次加载  1 正常 2 加载更多 
+  Result result;
   @override
     void initState() {
-      // TODO: implement initState
       super.initState();
-      Article.getHomeData();
+      initData();
       _controller.addListener((){
         print(_controller.offset);
        if (_controller.position.pixels ==
@@ -41,38 +42,43 @@ class _HomePageSate extends State<HomePage>{
       ),
       body: 
        Container(
-            // child: vm.isLoading?Center(child: CircularProgressIndicator(),):Container(
-            //   child: ListView(
-            //     controller: _controller,
-            //     children: <Widget>[
-            //       Padding(padding: const EdgeInsets.all(8.0),child: vm.ads.isNotEmpty ? HomeBanner(banners: vm.ads,) : Container()),
-            //       Container(height: 8,color: Colors.grey[100],),
-            //       vm.articles.isNotEmpty ? ListView.builder(
-            //         shrinkWrap: true,
-            //         physics: ClampingScrollPhysics(),
-            //         itemCount: vm.articles.length + 1,
-            //         itemBuilder: (context,index){
-            //           if(index < vm.articles.length){
-            //             return ArticleView(vm: vm.articles[index]);
-            //           }
-            //           return _getMoreWidget(vm.loadingMoreStatus);
-            //         },
-            //       ):Container()
-            //     ],
-            //   )
+            child: (loadStatus != 1 && loadStatus != 2)?Center(child: CircularProgressIndicator(),):Container(
+              child: ListView(
+                controller: _controller,
+                children: <Widget>[
+                  Padding(padding: const EdgeInsets.all(8.0),child: result.data["ad"].isNotEmpty ? HomeBanner(banners: result.data["ad"],) : Container()),
+                  Container(height: 8,color: Colors.grey[100],),
+                  result.data["article"].isNotEmpty ? ListView.builder(
+                    shrinkWrap: true,
+                    physics: ClampingScrollPhysics(),
+                    itemCount: result.data["article"].articles.length + 1,
+                    itemBuilder: (context,index){
+                      if(index < result.data["article"].articles.length){
+                        return ArticleView(vm: result.data["article"].articles[index]);
+                      }
+                      return _getMoreWidget();
+                    },
+                  ):Container()
+                ],
+              )
             )
-           
-            
-          
-        
       );
-        
+      
       }
 
+   void initData() async {
+     final res  = await Article.getHomeData();
+     if(res.code !=0 ){
+       Fluttertoast.showToast(msg: res.cmsg,toastLength:Toast.LENGTH_SHORT,gravity: ToastGravity.BOTTOM);
+       return;
+     }
+     setState(() {
+       result =res;
+     });
+   }
   
-  
-    Widget _getMoreWidget(int loadMoreStatus) {
-      if(loadMoreStatus == 0){
+    Widget _getMoreWidget() {
+      if(loadStatus == 1 || loadStatus == 0){
         return null;
       }
       else{
