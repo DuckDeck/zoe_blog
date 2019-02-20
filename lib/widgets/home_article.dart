@@ -108,6 +108,10 @@ class ArticleView extends StatelessWidget {
     );
   }
 
+ void togoArticle(int articleId,BuildContext context) {
+   
+ }
+
   Widget _buildContent(BuildContext context) {
     Widget child = Container();
       GestureDetector(

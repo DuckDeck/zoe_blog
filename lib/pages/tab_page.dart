@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zoe_blog/pages/main.dart';
+import 'package:zoe_blog/pages/home.dart';
 import 'package:zoe_blog/widgets/tabbar_item.dart';
 
 class TabPage extends StatefulWidget {
