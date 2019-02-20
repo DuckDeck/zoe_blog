@@ -16,6 +16,8 @@ class Article{
   String sortName;
   int commentCount;
   int likeCount;
+  int collectCount;
+  String content;
   List<Tag> tags;
   User userInfo;
 
@@ -32,6 +34,8 @@ class Article{
     sortName = json["article_sort_name"];
     commentCount = json["comment_count"];
     likeCount = json["like_count"];
+    content =json["article_content"] ?? '';
+    collectCount = json["collect_count"] ?? 0;
     tags = [];
     if(json.containsKey("tags")){
       for(final item in json["tags"]){
@@ -69,7 +73,6 @@ class Article{
     return result;
   }
 
-
   static Future<Result> getHomeArticles(int index, int size) async{
 
     final url = "http://api.bqbbq.com/api/index/$index/$size";
@@ -103,7 +106,21 @@ class Article{
   }
 
   
- 
+  static Future<Result> getArticle(int articleId) async{
+     final url = "http://api.bqbbq.com/api/article/$articleId/0/0";
+     final httpClient = Dio();
+     final res = await httpClient.get(url);
+
+     final result =Result.fromData(res.data);
+     if (result.code != 0){
+       return result;
+     }
+
+     final article =Article.fromJson(result.data);
+     result.data =article;
+     return result; 
+
+  }
 
   
 

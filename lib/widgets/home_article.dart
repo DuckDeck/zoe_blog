@@ -3,6 +3,7 @@ import 'package:zoe_blog/tool/tool.dart';
 import 'package:zoe_blog/model/article.dart';
 import 'package:zoe_blog/widgets/tag.dart';
 import 'package:zoe_blog/tool/constant.dart';
+import 'package:zoe_blog/pages/article.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 class ArticleView extends StatelessWidget {
   final Article vm;
@@ -37,7 +38,7 @@ class ArticleView extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text(
-                                  vm.userInfo.readlName,
+                                  vm.userInfo.realName,
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                                
@@ -67,7 +68,9 @@ class ArticleView extends StatelessWidget {
                       ),
                     ),
               Padding(padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child:CachedNetworkImage(imageUrl: vm.mainImg),
+                child:GestureDetector(child: CachedNetworkImage(imageUrl: vm.mainImg), onTap: (){
+                  togoArticle(vm.articleId, context);
+                },),
               ),      
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -109,7 +112,7 @@ class ArticleView extends StatelessWidget {
   }
 
  void togoArticle(int articleId,BuildContext context) {
-   
+   Navigator.of(context).push(MaterialPageRoute(builder: ((context)=>ArticlePage(articleId))));
  }
 
   Widget _buildContent(BuildContext context) {
